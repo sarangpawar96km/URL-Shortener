@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+        body {
+            font-family: Tahoma;
+            display: flex;
+            flex-direction: column;
+            padding-inline: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 80px;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        h2{
+            text-align: center;
+        }
+
+        form {
+            width: 100%;
+        }
+
+        .form-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form-content label {
+            font-size: 30px;
+            font-weight: 800;
+            margin-top: 15px;
+            color: grey;
+        }
+
+        .form-content input {
+            padding: 8px;
+            width: 22.7%;
+            margin-top: 10px;
+            font-size: 20px;
+            outline: none;
+            border-radius: 5px;
+            border: 1px solid grey;
+        }
+
+        .button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px;
+        }
+
+        .button button {
+            padding: 10px;
+            color: grey;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 15px;
+            cursor: pointer;
+            border: 1px solid grey;
+        }
+
+        table {
+            margin-top: 20px;
+            width: 100%;
+            border: 2px solid grey;
+        }
+
+        th {
+            border: 2px solid grey;
+            padding-block: 5px;
+        }
+
+        td {
+            text-align: center;
+            border: 2px solid grey;
+            padding-block: 3px;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        .back-to-home {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .back-to-home a {
+            padding: 8px;
+            cursor: pointer;
+
+        }
+    </style>
+</head>
+
+<body>
+    <h1>URL Shortener</h1>
+    <div>
+        <form method="post" action="/url/">
+            <div class="form-content">
+                <label for="url">Enter Your Original URL</label>
+                <input type="text" placeholder="https://example.com" name="url" id="url">
+            </div>
+            <div class="button">
+                <button type="submit">Generate</button>
+            </div>
+        </form>
+        <% if (locals.id) { %>
+            <p>URL Generated: <a href="http://localhost:8001/url/<%= id %>"> http://localhost:8001/url/<%= id %></a></p>
+            <div class="back-to-home"><a href="http://localhost:8001/">Back to home page</a></div>
+        <% }  %>
+         
+    </div>
+
+    <div>
+        <% if (locals.urls) { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sr.No</th>
+                        <th>ShortId</th>
+                        <th>Redirect</th>
+                        <th>Clicks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% urls.forEach((url,index)=> { %>
+                        
+                        <tr>
+                            <td>
+                                <%= index+1 %>
+                            </td>
+                            <td>
+                                <%= url.shortId %>
+                            </td>
+                            <td>
+                                <%= url.redirectUrl%>
+                            </td>
+                            <td>
+                                <%= url.visitHistory.length%>
+                            </td>
+                            <% }) %>
+                        </tr>
+                </tbody>
+            </table>
+            <% } %>
+    </div>
+</body>
+
+</html>
